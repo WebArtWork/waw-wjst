@@ -1,0 +1,10 @@
+{
+	"name": "Template",
+	"priority": 900,
+	"runner": "runner.js",
+	"router": "index.js",
+	"git": {
+		"repo": "https://github.com/WebArtWork/template.git"
+	},
+	"dependencies": {}
+}
