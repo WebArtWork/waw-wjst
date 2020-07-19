@@ -1,59 +1,53 @@
-const { exec } = require('child_process');
 const fs = require('fs');
-const exe = function(command, cb=()=>{}){
-	if(!command) return cb();
-	exec(command, (err, stdout, stderr) => {
-		cb({err, stdout, stderr});
-	});
+const path = require('path');
+const make_path = function(argv){
+	return {path, name, Name};
 }
-const make_path = function(argv, folder, double_name){
-	if(!argv.length){
+const new_page = function(params){
+	if(!params.argv.length){
 		console.log('Provide Name');
 		process.exit(0);
 	}
-	let path_argv = argv.slice();
-	let path = path_argv[0];
-	if(path_argv[0].indexOf('/')==-1){
-		path = folder;
-		while(path_argv.length){
-			path += '/' + path_argv.shift();
-		}
-	}
-	path = path.toLowerCase();
-	let name_argv = argv.slice();
-	let name = name_argv[name_argv.length-1];
-	if(name.indexOf('/')>-1){
-		name = name.split('/');
-		name = name[name.length-1];
-	}
-	name = name.toLowerCase();
+	let name = params.argv[0].toLowerCase();
 	let Name = name.slice(0, 1).toUpperCase() + name.slice(1);
-	let base = process.cwd() + '/src/app/'+path;
-	if(double_name){
-		base += '/'+name;
-	}
-	return {path, name, Name, base};
-}
-const new_page = function(params){
-	const {name, Name, base, folder} = make_path(params.argv, 'services');
-	if (fs.existsSync(base+'.service.ts')) {
-		console.log('Service already exists');
+	let location = process.cwd()+'/pages/'+name;
+	if (fs.existsSync(location)) {
+		console.log('Page already exists');
 		process.exit(0);
 	}
-	let ts = fs.readFileSync(__dirname+'/service/service.ts', 'utf8');
-	ts = ts.split('CNAME').join(Name);
-	ts = ts.split('NAME').join(name);
-	fs.writeFileSync(base+'.service.ts', ts, 'utf8');
-	let index = process.cwd() + '/src/app/services/index.ts';
-	if (fs.existsSync(index)) {
-		let index_exports = fs.readFileSync(index, 'utf8') || '';
-		let code = "export { "+Name+"Service } from './"+name+".service';";
-		if(index_exports.indexOf(code)==-1){
-			index_exports += (index_exports.length&&"\n"||"")+code;
-			fs.writeFileSync(index, index_exports, 'utf8');
-		}
+	fs.mkdirSync(location, { recursive: true });
+	let pages = params.getDirectories(process.cwd()+'/pages');
+	for (var i = 0; i < pages.length; i++) {
+		pages[i] = pages[i].split(path.sep).pop();
 	}
-	console.log('Service has been created');
+	let code = fs.readFileSync(__dirname+'/page/index.css', 'utf8');
+	code = code.split('CNAME').join(Name);
+	code = code.split('NAME').join(name);
+	fs.writeFileSync(location+'/index.css', code, 'utf8');
+	code = fs.readFileSync(__dirname+'/page/index.html', 'utf8');
+	code = code.split('CNAME').join(Name);
+	code = code.split('NAME').join(name);
+	for (var i = 0; i < pages.length; i++) {
+		code = '<a href="/'+pages[i]+'">'+pages[i]+'</a>\n' + code;
+	}
+	fs.writeFileSync(location+'/index.html', code, 'utf8');
+	code = fs.readFileSync(__dirname+'/page/index.js', 'utf8');
+	code = code.split('CNAME').join(Name);
+	code = code.split('NAME').join(name);
+	fs.writeFileSync(location+'/index.js', code, 'utf8');
+	code = fs.readFileSync(__dirname+'/page/page.json', 'utf8');
+	code = code.split('CNAME').join(Name);
+	code = code.split('NAME').join(name);
+	fs.writeFileSync(location+'/page.json', code, 'utf8');
+
+	code = fs.readFileSync(__dirname+'/page/build.html', 'utf8');
+	code = code.split('CNAME').join(Name);
+	code = code.split('NAME').join(name);
+	for (var i = 0; i < pages.length; i++) {
+		code = '<a href="/'+pages[i]+'">'+pages[i]+'</a>\n' + code;
+	}
+	fs.writeFileSync(process.cwd()+'/build/'+name+'.html', code, 'utf8');
+	console.log('Page has been created');
 	process.exit(1);
 }
 module.exports.page = new_page;
