@@ -6,5 +6,8 @@
 	"git": {
 		"repo": "https://github.com/WebArtWork/template.git"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"node-sass": "*",
+		"uglify-js": "*"
+	}
 }
