@@ -46,7 +46,7 @@ const new_page = function(params){
 	for (var i = 0; i < pages.length; i++) {
 		code = '<a href="/'+pages[i]+'">'+pages[i]+'</a>\n' + code;
 	}
-	fs.writeFileSync(process.cwd()+'/build/'+name+'.html', code, 'utf8');
+	fs.writeFileSync(process.cwd()+'/dist/'+name+'.html', code, 'utf8');
 	console.log('Page has been created');
 	process.exit(1);
 }
