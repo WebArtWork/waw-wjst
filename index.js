@@ -1,8 +1,62 @@
 const fs = require('fs');
 const path = require('path');
 const UglifyJS = require("uglify-js");
+const mongoose = require('mongoose');
 const sass = require('node-sass');
 module.exports = function(waw){
+	let template = JSON.parse(fs.readFileSync(process.cwd()+'/template.json'));
+	if(mongoose.connection.readyState==0 && template.mongo){
+		let mongoAuth = '';
+		if(template.mongo.user&&template.mongo.pass){
+			mongoAuth = template.mongo.user + ':' + template.mongo.pass + '@';
+		}
+		waw.mongoUrl = 'mongodb://'+mongoAuth+(template.mongo.host||'localhost')+':'+(template.mongo.port||'27017')+'/'+(template.mongo.db||'test');
+		mongoose.connect(waw.mongoUrl, {
+			useUnifiedTopology: true,
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			promiseLibrary: global.Promise
+		});
+	}
+	/*
+	*	Serve Management
+	*/
+		waw.serve = function(domains, urls){
+			waw.use(function(req, res, next) {
+				let host = req.get('host').toLowerCase();
+				if(req.url.indexOf('/api/')==0) return next();
+				if(domains.indexOf(host)>=0){
+					if(req.url.indexOf('.')>-1){
+						res.sendFile(process.cwd()+'/client/dist/client'+req.url);
+					}else if(!urls){
+						res.sendFile(process.cwd()+'/client/dist/client/index.html');
+					}else{
+						if(typeof urls == 'string') urls = urls.split(' ');
+						for (var i = 0; i < urls.length; i++) {
+							if(req.url.indexOf(urls[i])>=0){
+								return res.sendFile(process.cwd()+'/client/dist/client/index.html');
+							}
+						}
+						next();
+					}
+				}else{
+					next();
+				}
+			});
+		}
+		waw.crud('serve', {
+			get: {
+				query: function() {
+					return {};
+				}
+			}, update: [{
+				query: function(req, res) {
+					return {
+						_id: req.body._id
+					}
+				}
+			}]
+		});
 	/*
 	*	Pages Management
 	*/
@@ -44,7 +98,6 @@ module.exports = function(waw){
 			let name = pages[i];
 			if (fs.existsSync(process.cwd()+'/pages/'+name+'/page.json')) {
 				pages[i] = {};
-				let template = JSON.parse(fs.readFileSync(process.cwd()+'/template.json'));
 				for(let each in template){
 					pages[i][each] = template[each];
 				}

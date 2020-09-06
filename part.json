@@ -7,7 +7,17 @@
 		"repo": "https://github.com/WebArtWork/template.git"
 	},
 	"dependencies": {
+		"mongoose": "*",
 		"node-sass": "*",
 		"uglify-js": "*"
-	}
+	},
+	"crud": [{
+		"name": "serve",
+		"update": [{
+			"name": "domain",
+			"keys": ["domain"]
+		}, {
+			"keys": ["title", "description", "thumb", "keywords", "page", "url"]
+		}]
+	}]
 }
