@@ -1,0 +1,95 @@
+// WAW Collapse
+
+
+.waw-collapse {
+  // toggle hidden
+  input {
+    display: none;
+    visibility: hidden;
+  }
+  // collapse header row
+  label {
+    position: relative;
+    color: #fff;
+    padding: 8px 20px 8px 8px;
+    background: $c-primary-2;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  // collapse body container
+  #expand {
+    height: 60vh;
+    overflow: auto;
+    transition: height 0.5s;
+    background: #fff;
+    border-radius: 10px;
+    color: blue;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 1px 4px 9px 0px #dcd5d5;
+  }
+  // section in body container
+  section {
+    padding: 20px;
+  }
+  // collapse toggle settings
+  #toggle1:checked ~ #expand {
+    height: 0;
+  }
+  #toggle2:checked ~ #expand {
+    height: 0;
+  }
+  #toggle3:checked ~ #expand {
+    height: 0;
+  }
+  #toggle4:checked ~ #expand {
+    height: 0;
+  }
+  // collapse arrow
+  label::before {
+    content: "";
+    position: absolute;
+    right: 15px;
+    color: #fff;
+    width: 6px;
+    height: 6px;
+    transform: rotate(135deg);
+    border-right: 2px solid #fff;
+    transition: 0.3s all ease-in-out;
+    border-top: 2px solid #fff;
+    display: block;
+  }
+  #toggle1:checked ~ label::before {
+    transform: rotate(45deg);
+    transition: 0.3s all ease-in-out;
+  }
+  #toggle2:checked ~ label::before {
+    transform: rotate(45deg);
+    transition: 0.3s all ease-in-out;
+  }
+  #toggle3:checked ~ label::before {
+    transform: rotate(45deg);
+    transition: 0.3s all ease-in-out;
+  }
+  #toggle4:checked ~ label::before {
+    transform: rotate(45deg);
+    transition: 0.3s all ease-in-out;
+  }
+
+  .chevron {
+    color: #fff;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    border-right: 2px solid #fff;
+    transition: 0.3s all ease-in-out;
+    border-top: 2px solid #fff;
+    display: block;
+  }
+  .chevronChecked {
+    transform: rotate(90deg);
+    transition: 0.3s all ease-in-out;
+  }
+}

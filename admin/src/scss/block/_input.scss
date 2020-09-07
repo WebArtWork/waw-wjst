@@ -1,0 +1,157 @@
+.input{
+	color: $blue;
+	font-size: 14px;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	background: transparent;
+	border: 1px solid  $dark;
+	border-radius: 3px;
+	resize: vertical;
+	padding: 10px;
+
+
+	&:focus{
+		border: 1px solid $sky;
+
+	}
+	
+}
+
+.formbox{
+	display: block;
+	margin-bottom: 20px;
+	color: $blue;
+	&_label{
+		margin-bottom: 10px;
+		color: $blue;
+		font-size: 16px;
+	}
+	&_top{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+	}
+	
+	
+}
+.autocomplete{
+	background: $white;
+	position: absolute;
+	z-index: 2;
+	border: 1px solid $blue;
+	width: 100%;
+	color: $blue;
+	overflow-y: auto;
+	max-height: 154px;
+	&>*{
+
+		padding: 10px;
+		&:hover{
+			background: $sky;
+			color: $white;
+		}
+	}
+}
+.title-site{
+	border: none;
+	background: none;
+	color: $blue;
+}
+
+.border-input{
+	color: $white;
+	font-size: 16px;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid $white;
+	resize: vertical;
+	&:focus{
+		border-bottom: 1.5px solid $white;
+
+	}
+
+}
+
+textarea{
+	color: $blue;
+	font-size: 14px;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	background: transparent;
+	border: 1px solid  $dark;
+	border-radius: 3px;
+	resize: vertical;
+	padding: 10px;
+
+
+	&:focus{
+		border: 1px solid $sky;
+
+	}
+}
+.waw-checkbox {
+  display: flex;
+  position: relative;
+  height: 16px;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+​
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  &:hover input ~ .checkmark {
+    border: 1.5px solid $sky;
+  }
+  input:checked ~ .checkmark {
+    background-color: $sky;
+    border: none;
+    transition: 0.2s ease-in-out;
+  }
+  input:checked ~ .checkmark:after {
+    display: block;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1.2px solid $sky;
+    transition: 0.2s ease-in-out;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 2px;
+      width: 3px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+}

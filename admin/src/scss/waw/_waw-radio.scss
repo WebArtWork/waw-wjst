@@ -1,0 +1,56 @@
+// RADIO
+.waw-radio {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  position: relative;
+  padding-left: 35px;
+  height: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  &:hover input ~ .checkmark {
+    border: 1.5px solid $c-primary-1;
+    transition: 0.2s ease-in-out;
+  }
+  input:checked ~ .checkmark {
+    background-color: $c-primary-1;
+    border: 2px solid $c-primary-1;
+  }
+  input:checked ~ .checkmark:after {
+    display: block;
+  }
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 1px solid $c-border;
+    border-radius: 50%;
+    transition: 0.2s ease-in-out;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 4.5px;
+      top: 4px;
+      background: #fff;
+      border-radius: 20px;
+      width: 8px;
+      height: 8px;
+    }
+  }
+}

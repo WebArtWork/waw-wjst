@@ -1,0 +1,29 @@
+.waw-mat-menu {
+  position: relative;
+
+  &__body {
+    position: absolute;
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 4px;
+    outline: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-height: 64px;
+    background: #fff;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+
+    &._top {
+      top: -115px;
+    }
+  }
+}

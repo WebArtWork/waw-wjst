@@ -1,0 +1,82 @@
+html,
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+* {
+	outline: 0;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+html {
+	font-size: $fs;
+	overflow: hidden;
+	height: 100vh;
+}
+body {
+	cursor: default;
+	/* default font settings */
+	font-family: $ff-base;
+	color: $text;
+	line-height: 1.4;
+	/* break words without spacing */
+	word-wrap: break-word;
+	word-break: break-word;
+	position: relative;
+	overflow: hidden;
+	height: 100vh;
+}
+
+img{
+	width: 100%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.app-root{
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	&:visited{
+		color: inherit;
+	}
+	
+}
+
+.router-outlet {
+	flex-grow: 1;
+	overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+
+}
+.page-wrapper {
+	height: calc(100vh - 50px);
+	overflow: hidden;
+	@include bp-max(sm) {
+		overflow-y: auto;
+	}
+
+}
+.right-col {
+	height: calc(100vh - 50px);
+	overflow-y: auto;
+	@include bp-max(sm) {
+		overflow: hidden;
+		height: auto;
+	}
+}

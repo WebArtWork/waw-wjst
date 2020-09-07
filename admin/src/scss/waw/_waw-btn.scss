@@ -1,0 +1,82 @@
+// BUTTONS
+.waw-btn {
+    // buttons body settings
+	min-width: 150px;
+    display: inline-block;
+    font-weight: bold;
+	font-family: $ff-second;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: none;
+    padding: 0.375rem 0.75rem;
+    color: #fff;
+	text-transform: uppercase;
+    font-size: 16px;
+    line-height: 1.5;
+	letter-spacing: 1.25px;
+    background-color: $sky;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+
+    // buttons color settings
+    &._primary {
+        background-color: $sky;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            background-color: $skyL;
+            transition: 0.2s ease-in-out;
+        }
+    }
+
+    &._second {
+        border: 1px solid $sky;
+        background-color: $white;
+        transition: 0.2s ease-in-out;
+        color: $sky;
+    }
+
+    &._danger {
+        background-color: $red;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            background-color: $redD;
+            transition: 0.2s ease-in-out;
+        }
+    }
+
+
+    &._disabled-1 {
+        background-color: $grey;
+        cursor: not-allowed;
+    }
+
+    &._disabled-2 {
+        background-color: $white;
+        border: 1px solid $grey;
+        color: $grey;
+        cursor: not-allowed;
+    }
+
+
+}
+
+.waw-btn__icon {
+    background: #3498DB;
+    width: 35px;
+    height: 35px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .1s all ease-in-out;
+    &:hover {
+        background: #58ACF5;
+        transition: .1s all ease-in-out;
+    }
+}

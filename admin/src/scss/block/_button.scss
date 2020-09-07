@@ -1,0 +1,43 @@
+
+.btn{
+	color: $white;
+	background: $sky;
+	border-radius: 3px;
+	padding: 6px 30px;
+	border: none;
+	transition: 0.5s;
+	cursor: pointer;
+	&:hover{
+		background: $blue;
+		
+
+	}
+	&_red{
+	background: #E74C3C;
+	border-radius: 3px;
+	padding: 6px 25px;
+	border: none;
+	transition: 0.5s;
+	cursor: pointer;
+	color: $white;
+		&:hover{
+			background: #C0392B;
+
+		}
+	}
+}
+.btn-url{
+	border: none;
+	background: none;
+	color: $blue;
+	cursor: pointer;
+	&:hover{
+		color: $sky;
+	}
+}
+.fly-icons{
+    color: #5b5a5a;
+    &:hover{
+        color: #5b5a5a9e;
+    }
+}

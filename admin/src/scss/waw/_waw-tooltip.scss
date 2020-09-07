@@ -1,0 +1,97 @@
+
+// WAW Tooltip
+.waw-tooltip {
+  cursor: pointer;
+  position: relative;
+
+  &._top {
+    &::before {
+      top: -40px;
+      left: -20px;
+    }
+  }
+
+  &._right {
+    &::before {
+      left: 110%;
+      top: -2px;
+    }
+
+    &::after {
+      top: 11px;
+      left: 108%;
+      transform: rotate(90deg);
+    }
+  }
+
+  &._left {
+    &::before {
+      right: 110%;
+      top: -2px;
+    }
+
+    &::after {
+      top: 11px;
+      left: -8%;
+      transform: rotate(-90deg);
+    }
+  }
+
+  &._bottom {
+    &::before {
+      bottom: -50px;
+      left: -36px;
+    }
+
+    &::after {
+      left: 50%;
+      transform: rotate(180deg);
+      bottom: -21px;
+    }
+  }
+  //Tooltip text container
+  &::before {
+    position: absolute;
+    background-color: #2B222A;
+    border-radius: 5px;
+    color: #fff;
+    content: attr(aria-label); //This pulls in the text from the element with the tooltip
+    padding: 0.5rem;
+    text-transform: none;
+    transition: all 0.5s ease-in-out;
+    width: 200px;
+  }
+  //Tooltip arrow
+  &::after {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2B222A;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+    margin-left: -5px;
+    width: 0;
+    transition: all .5s ease-in-out;
+  }
+  //Setting up the transition
+  &::after,
+  &::before {
+    color: #efefef;
+    font-family: monospace;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+  //Triggering the transition
+  &:focus::after,
+  &:focus::before,
+  &:hover::after,
+  &:hover::before {
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  }
+}

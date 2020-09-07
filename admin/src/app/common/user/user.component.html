@@ -1,0 +1,22 @@
+<div class="topbar">
+	<div class="menu-topbar">	
+		<div class="topleft-container">
+			<div class="topbar-title">
+				<a routerLink="/profile">
+					<img class="logo-img" src="/assets/logo.png" alt="">
+				</a>
+			</div>
+		</div>
+		<div class="topright-container">
+			<div class="topbar-title">
+				<a routerLink="/users" *ngIf="us.is?.admin">Users</a>
+			</div>
+			<div class="topbar-title profile-title">
+				<a routerLink="/profile">
+					<img class="profile-img" alt="" [src]="us.avatarUrl">
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<router-outlet></router-outlet>

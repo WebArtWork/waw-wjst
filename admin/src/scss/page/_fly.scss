@@ -1,0 +1,370 @@
+.fly {
+    &_main-input {
+        width: 600px;
+        max-width: 100%;
+
+        .input {
+            padding: 10px 110px 10px 10px;
+            border: 1px solid#e5e5e5;
+        }
+    }
+
+    &_main-btn {
+        margin-left: -97px;
+        .btn{
+            height: 100%;
+            background: #e5e5e5;
+            color: #5c5c5c;
+            text-transform: uppercase;
+            &:hover{
+                background:#5c5c5c;
+                color: #e5e5e5;
+            }
+        }
+    }
+
+    &_main {
+        max-width: 100%;
+        display: block;
+    }
+
+    &_main-title {
+        font-size: 55px;
+        text-shadow: rgba(0, 0, 0, 0.2) -1px 4px 4px;
+        font-weight: 900;
+        color: #5b5a5a;
+    }
+
+    &_history-box {
+        overflow: auto;
+        height: 100%;
+        padding: 0 15px 0 0;
+    }
+    &_history-title{
+        color: #5b5a5a;
+    }
+}
+
+.fly-wrapper {
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Josefin Sans';
+}
+
+.fly-top {
+    width: 100%;
+    height: 45px;
+    background: #f8f8f8;
+    color: $dark;
+    display: flex;
+    border-bottom: 1px solid #1e93dc;
+    align-items: center;
+
+    i {
+        margin: 0 20px;
+    }
+
+    &_left {
+        width: 300px;
+        max-width: 300px;
+    }
+
+    &_right {
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}
+
+.fly-sidebar {
+    height: 100%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid $grey;
+    background: #f8f8f8;
+    padding: 15px 15px 60px 15px;
+
+    & > * {
+        width: 100%;
+    }
+}
+.fly-sidebar{
+    h2{
+        color: #5b5a5a;
+    }
+    span{
+        color: #5b5a5a;
+    }
+}
+.fly-content {
+    height: 100%;
+    width: calc(100% - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding: 0 15px;
+}
+
+.history {
+    max-width: 600px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 18px;
+
+    span {
+        font-size: 20px;
+    }
+
+    @include bp-max(md) {
+        max-width: 100%;
+    }
+
+    .hover-icon {
+        color: transparent;
+
+        font-size: 18px;
+
+        @include bp-max(md) {
+            color: $blue;
+
+        }
+    }
+
+    &:hover {
+        .hover-icon {
+            color: $blue;
+
+            &:hover {
+                color: $sky;
+            }
+        }
+    }
+
+}
+
+.history .ai-c {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.input-box {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    margin-bottom: 80px;
+}
+
+.border-history {
+    max-width: 600px !important;
+    width: 100%;
+    padding: 15px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 185px !important;
+    max-height: 200px;
+    box-shadow: 0 0 0 1px $grey;
+    border: 1px solid $grey;
+}
+
+.border-fly {
+    max-width: 300px;
+    max-height: 600px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 0 0 1px $grey;
+    border: 1px solid $grey;
+    flex-grow: 1;
+    padding: 15px 15px 15px 15px;
+
+    @include bp-max(sm) {
+        max-height: 500px;
+    }
+
+    span {
+        font-size: 20px;
+        margin: 5px;
+        font-weight: 400;
+    }
+
+    &_search {
+        background: $blue;
+        color: $white;
+        width: 100%;
+
+        i {
+            color: $white;
+        }
+    }
+
+}
+
+.viewbox {
+    overflow: auto;
+    border: 3px solid $blue;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+.viewbox-wrapper {
+    position: absolute;
+    height: calc(100vh - 95px);
+    max-height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 991px) {
+    .fly-content {
+        justify-content: unset;
+        overflow: auto;
+        height: 84%;
+    }
+
+    .fly_main-title {
+        margin: 35px 0 15px 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .fly-sidebar {
+        width: 220px;
+        padding: 8px;
+    }
+
+    .fly_history-box {
+        overflow: auto;
+        height: 100%;
+        padding-right: 0;
+    }
+
+    .fly-content {
+        width: calc(100% - 220px);
+        overflow: auto;
+        height: 84%;
+    }
+
+    .border-fly {
+        padding: 8px;
+        max-height: 160px;
+    }
+
+    .history {
+        font-size: 14px;
+        max-width: 98%;
+    }
+
+    .fly_main-title {
+        font-size: 44px;
+    }
+
+    .fly_main-input {
+        width: 518px;
+    }
+
+    .fly_main-btn {
+        margin-left: -65px;
+    }
+
+    .fly_main-btn .btn {
+        padding: 6px 15px;
+    }
+
+    .fly-top i {
+        margin: 0 10px;
+    }
+
+    .title-site {
+        max-width: 90px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .fly_top-right {
+        position: absolute;
+        top: 85px;
+        width: 100%;
+        left: 0;
+        background: #f8f8f8;
+    }
+
+    .fly-top i {
+        margin: 0 8px;
+    }
+
+    .title-site {
+        width: 100%;
+        padding: 4px;
+    }
+
+    .fly-top_left {
+        width: 176px;
+        max-width: 300px;
+    }
+
+    .fly-top_right {
+        justify-content: flex-end;
+    }
+
+    .formbox_top div h2 {
+        margin: 10px 0;
+    }
+
+    .formbox {
+        margin-bottom: 10px;
+    }
+
+    .fly-sidebar {
+        width: 100%;
+        padding: 10px;
+        max-height: 260px;
+    }
+
+    .fly-sidebar .formbox_top {
+        margin-bottom: 10px;
+    }
+
+    .fly-content {
+        width: 100%;
+        height: 100%;
+    }
+
+    .fly-wrapper {
+        overflow: auto;
+    }
+
+    .fly_main-title {
+        margin: 15px 0 15px 0;
+    }
+
+    .input-box {
+        margin-bottom: 50px;
+    }
+
+    .border-fly {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+//

@@ -4,7 +4,10 @@ const UglifyJS = require("uglify-js");
 const mongoose = require('mongoose');
 const sass = require('node-sass');
 module.exports = function(waw){
-	let template = JSON.parse(fs.readFileSync(process.cwd()+'/template.json'));
+	let template = {};
+	if (fs.existsSync(process.cwd()+'/template.json')) {
+		template = JSON.parse(fs.readFileSync(process.cwd()+'/template.json'));
+	}else return;
 	if(mongoose.connection.readyState==0 && template.mongo){
 		let mongoAuth = '';
 		if(template.mongo.user&&template.mongo.pass){
@@ -129,10 +132,12 @@ module.exports = function(waw){
 				for (var i = 0; i < files.length; i++) {
 					css += fs.readFileSync(files[i], 'utf8');
 				}
-				css = sass.renderSync({
-					data: css,
-					outputStyle: 'compressed'
-				}).css.toString();
+				if(css){
+					css = sass.renderSync({
+						data: css,
+						outputStyle: 'compressed'
+					}).css.toString();
+				}
 				fs.writeFileSync(process.cwd()+'/dist/template.css', css, 'utf8');
 				files = waw.getFilesRecursively(process.cwd()+'/js', {
 					end: '.js'
