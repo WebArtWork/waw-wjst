@@ -5,10 +5,12 @@ module.exports = function(waw){
 	if (fs.existsSync(process.cwd()+'/template.json')) {
 		template = JSON.parse(fs.readFileSync(process.cwd()+'/template.json'));
 	}else return;
+	waw.now = Date.now();
 	waw.serve(process.cwd(), {prefix: template.prefix});
 	fs.mkdirSync(process.cwd()+'/pages', { recursive: true });
-	fs.mkdirSync(process.cwd()+'/dist', { recursive: true });
-	waw.app.get('/reset', function(req, res){ res.send(waw.now); });
+	waw.app.get('/reset', function(req, res){
+		res.json(waw.now||'');
+	});
 	/*
 	*	Pages Management
 	*/
@@ -16,14 +18,19 @@ module.exports = function(waw){
 		const serve = function(page){
 			let url = '/' + (page.name!='index'&&page.name||'');
 			waw.app.get(url, function(req, res){
-				res.send(waw._derer.renderFile(page.dist, page.config));
+				let html = waw._derer.renderFile(page.dist, page.config);
+				let refresh = `<script>var id, reset = ()=>{ fetch('/reset').then(response => response.json()).then(resp => { if(!id) id = resp; else if(id != resp){ return location.reload(); }; setTimeout(reset, 1000); });};reset();</script>`;
+				html = html.replace('</body>', refresh+'</body>')
+				res.send(html);
 			});
-			waw.build(page.root);
+			waw.build(process.cwd(), page.name);
 			fs.watch(page.root, {
 				recursive: true
 			}, (curr, prev) => {
-				waw.build(page.root);
-				waw.now = Date.now();
+				waw.afterWhile(this, ()=>{
+					waw.build(process.cwd(), page.name);
+					waw.now = Date.now();
+				}, 100);
 			});
 		}
 		for (let i = pages.length-1; i >= 0; i--) {
@@ -47,10 +54,12 @@ module.exports = function(waw){
 			}
 		}
 		const reset = function(){
-			for (var i = 0; i < pages.length; i++) {
-				waw.build(pages[i].root);
-			}
-			waw.now = Date.now();
+			waw.afterWhile(this, ()=>{
+				for (var i = 0; i < pages.length; i++) {
+					waw.build(process.cwd(), pages[i].name);
+				}
+				waw.now = Date.now();
+			}, 100);
 		}
 		fs.watch(process.cwd()+'/index.html', {
 			recursive: true
