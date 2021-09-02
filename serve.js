@@ -4,8 +4,8 @@ const sep = path.sep;
 const sass = require('sass');
 module.exports = function(waw) {
     let template = {};
-    if (fs.existsSync(process.cwd() + '/template.json')) {
-        template = JSON.parse(fs.readFileSync(process.cwd() + '/template.json'));
+    if (fs.existsSync(path.join(process.cwd(), 'template.json'))) {
+        template = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'template.json')));
     } else return;
     waw.now = Date.now();
     waw.serve(process.cwd(), {
@@ -17,20 +17,21 @@ module.exports = function(waw) {
     waw.app.get('/reset', function(req, res) {
         res.json(waw.now || '');
     });
-    const compileScss = (root, file) => {
-        if (file.endsWith('.scss') && fs.existsSync(root + sep + file)) {
+    const compileScss = (root, file, name) => {
+        if (file.endsWith('.scss') && fs.existsSync(path.join(root, file))) {
             sass.render({
                 file: root + sep + file,
 				outputStyle: 'compressed'
             }, function(err, result) {
-                fs.writeFile(root + sep + file.replace('.scss', '.css'), result.css, 'utf8', err => {
+				if(err || !result) return;
+                fs.writeFile(path.join(process.cwd(), 'css', name), result.css, 'utf8', err => {
                     if (err) throw err;
                     waw.now = Date.now();
                 });
             });
         }
     }
-    compileScss(process.cwd() + '/css', 'index.scss');
+    compileScss(process.cwd() + '/css', 'index.scss', 'index.css');
     /*
      *	Pages Management
      */
@@ -44,11 +45,11 @@ module.exports = function(waw) {
             res.send(html);
         });
         waw.build(process.cwd(), page.name);
-        compileScss(process.cwd() + '/pages/' + page.name, 'index.scss');
+        compileScss(process.cwd() + '/pages/' + page.name, 'index.scss', page.name+'.css');
         fs.watch(page.root, {
             recursive: true
         }, (action, file) => {
-            compileScss(process.cwd() + '/pages/' + page.name, file);
+            compileScss(process.cwd() + '/pages/' + page.name, file, page.name+'.css');
             waw.afterWhile(this, () => {
                 waw.build(process.cwd(), page.name);
                 waw.now = Date.now();
@@ -94,9 +95,11 @@ module.exports = function(waw) {
     }, reset);
     fs.watch(process.cwd() + '/css', {
         recursive: true
+    }, reset);
+    fs.watch(process.cwd() + '/scss', {
+        recursive: true
     }, (action, file) => {
-        compileScss(process.cwd() + '/css', file);
-        reset(action, file);
+        compileScss(process.cwd() + '/scss', 'index.scss', 'index.css');
     });
     fs.watch(process.cwd() + '/img', {
         recursive: true
