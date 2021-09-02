@@ -1,4 +1,4 @@
-# template
+# Template
 Module to support server side rendering with use of [Swig Templates](https://node-swig.github.io/swig-templates/).
 
 ## Runners
