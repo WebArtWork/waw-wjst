@@ -30,6 +30,7 @@ module.exports = function(waw) {
             });
         }
     }
+    compileScss(process.cwd() + '/css', 'index.scss');
     /*
      *	Pages Management
      */
@@ -43,6 +44,7 @@ module.exports = function(waw) {
             res.send(html);
         });
         waw.build(process.cwd(), page.name);
+        compileScss(process.cwd() + '/pages/' + page.name, 'index.scss');
         fs.watch(page.root, {
             recursive: true
         }, (action, file) => {
@@ -92,9 +94,9 @@ module.exports = function(waw) {
     }, reset);
     fs.watch(process.cwd() + '/css', {
         recursive: true
-    }, () => {
-        compileScss(process.cwd() + '/css', 'index.scss');
-        reset();
+    }, (action, file) => {
+        compileScss(process.cwd() + '/css', file);
+        reset(action, file);
     });
     fs.watch(process.cwd() + '/img', {
         recursive: true
