@@ -95,11 +95,12 @@ module.exports = function(waw) {
     }, reset);
     fs.watch(process.cwd() + '/css', {
         recursive: true
-    }, reset);
-    fs.watch(process.cwd() + '/scss', {
-        recursive: true
     }, (action, file) => {
-        compileScss(process.cwd() + '/scss', 'index.scss', 'index.css');
+        if(file.endsWith('.scss')){
+            compileScss(process.cwd() + '/css', 'index.scss', 'index.css');
+        } else {
+            reset();
+        }
     });
     fs.watch(process.cwd() + '/img', {
         recursive: true
