@@ -2,10 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const sep = path.sep;
 module.exports = function(waw){
-    let template = {};
-    if (fs.existsSync(process.cwd() + sep + 'template.json')) {
-        template = JSON.parse(fs.readFileSync(process.cwd() + sep + 'template.json'));
-    }
+	waw.derer.setFilter('translate', (phrase, page, language) => {
+		console.log(page, phrase, language);
+		return phrase;
+	});
+	let template = {};
+	if (fs.existsSync(process.cwd() + sep + 'template.json')) {
+		template = JSON.parse(fs.readFileSync(process.cwd() + sep + 'template.json'));
+	}
 	waw.build = function(root, page){
 		fs.mkdirSync(root+sep+'dist', { recursive: true });
 		if (!fs.existsSync(root+sep+'index.html')) {
