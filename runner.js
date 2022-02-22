@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const new_page = function(params){
-	if(!params.argv.length){
+const new_page = function(waw){
+	waw.argv.shift();
+	if(!waw.argv.length){
 		console.log('Provide Name');
 		process.exit(0);
 	}
-	let name = params.argv[0].toLowerCase();
+	let name = waw.argv[0].toLowerCase();
 	let Name = name.slice(0, 1).toUpperCase() + name.slice(1);
 	let location = process.cwd()+'/pages/'+name;
 	if (fs.existsSync(location)) {
@@ -14,7 +15,7 @@ const new_page = function(params){
 	}
 	fs.mkdirSync(location, { recursive: true });
 	fs.mkdirSync(path.join(process.cwd(),'dist'), { recursive: true });
-	let pages = params.getDirectories(process.cwd()+'/pages');
+	let pages = waw.getDirectories(process.cwd()+'/pages');
 	for (var i = 0; i < pages.length; i++) {
 		pages[i] = pages[i].split(path.sep).pop();
 	}
