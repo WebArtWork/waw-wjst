@@ -1,6 +1,6 @@
 {
 	"name": "Template",
-	"priority": 990,
+	"priority": 930,
 	"runner": "runner.js",
 	"router": "index.js serve.js",
 	"git": {
