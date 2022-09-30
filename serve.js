@@ -79,7 +79,6 @@ module.exports = function(waw) {
 	let loc = false;
 	const reset = function (action, file) {
 		if (loc) return;
-		console.log('reset', action, file);
 		waw.afterWhile(this, () => {
 			for (var i = 0; i < pages.length; i++) {
 				waw.build(process.cwd(), pages[i].name);
