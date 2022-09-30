@@ -75,15 +75,22 @@ module.exports = function(waw) {
         } else {
             pages.splice(i, 1);
         }
-    }
-    const reset = function(action, file) {
-        waw.afterWhile(this, () => {
-            for (var i = 0; i < pages.length; i++) {
-                waw.build(process.cwd(), pages[i].name);
-            }
-            waw.now = Date.now();
-        }, 100);
-    }
+	}
+	let loc = false;
+	const reset = function (action, file) {
+		if (loc) return;
+		console.log('reset', action, file);
+		waw.afterWhile(this, () => {
+			for (var i = 0; i < pages.length; i++) {
+				waw.build(process.cwd(), pages[i].name);
+			}
+			waw.now = Date.now();
+			loc = true;
+			setTimeout(() => {
+				loc = false;
+			}, 2000);
+		}, 100);
+	}
     fs.watch(process.cwd() + '/index.html', {
         recursive: true
     }, reset);
