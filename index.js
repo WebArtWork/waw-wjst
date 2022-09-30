@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sep = path.sep;
 module.exports = function(waw){
-	waw.derer.setFilter('translate', (phrase, page, language) => {
-		console.log(page, phrase, language);
+	waw.derer.setFilter('translate', (phrase) => {
 		return phrase;
 	});
 	let template = {};
