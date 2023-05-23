@@ -55,6 +55,9 @@ module.exports = function (waw) {
 	const serve = function (page) {
 		let url = "/" + ((page.name != "index" && page.name) || "");
 		waw.app.get(url, function (req, res) {
+			page.config.translate = (slug) => {
+				return slug.split('.').slice(1).join('.');
+			}
 			let html = waw._derer.renderFile(page.dist, page.config);
 			let refresh = `<script>var id, reset = ()=>{ fetch('/reset').then(response => response.json()).then(resp => { if(!id) id = resp; else if(id != resp){ return location.reload(); }; setTimeout(reset, 1000); });};reset();</script>`;
 			html = html.replace("</body>", refresh + "</body>");
