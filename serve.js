@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const sass = require("sass");
+const chokidar = require('chokidar');
+
 module.exports = function (waw) {
 	let template = {};
 	if (fs.existsSync(path.join(process.cwd(), "template.json"))) {
@@ -69,27 +71,26 @@ module.exports = function (waw) {
 			"index.scss",
 			page.name + ".css"
 		);
-		fs.watch(
+		chokidar.watch(
 			page.root,
 			{
 				recursive: true,
-			},
-			(action, file) => {
-				compileScss(
-					process.cwd() + "/pages/" + page.name,
-					file,
-					page.name + ".css"
-				);
-				waw.afterWhile(
-					this,
-					() => {
-						waw.build(process.cwd(), page.name);
-						waw.now = Date.now();
-					},
-					100
-				);
 			}
-		);
+		).on('all', (action, file) => {
+			compileScss(
+				process.cwd() + "/pages/" + page.name,
+				file,
+				page.name + ".css"
+			);
+			waw.afterWhile(
+				this,
+				() => {
+					waw.build(process.cwd(), page.name);
+					waw.now = Date.now();
+				},
+				100
+			);
+		});
 	};
 	for (let i = pages.length - 1; i >= 0; i--) {
 		let root = pages[i];
@@ -131,46 +132,42 @@ module.exports = function (waw) {
 			100
 		);
 	};
-	fs.watch(
+	chokidar.watch(
 		process.cwd() + "/index.html",
 		{
 			recursive: true,
-		},
-		reset
-	);
-	fs.watch(
+		}
+	).on('all', reset);
+	chokidar.watch(
 		process.cwd() + "/template.json",
 		{
 			recursive: true,
 		},
-		reset
-	);
-	fs.watch(
+	).on('all', reset);
+	chokidar.watch(
 		process.cwd() + "/js",
 		{
 			recursive: true,
 		},
 		reset
-	);
-	fs.watch(
+	).on('all', reset);
+	chokidar.watch(
 		process.cwd() + "/css",
 		{
 			recursive: true,
 		},
-		(action, file) => {
-			if (file.endsWith(".scss")) {
-				compileScss(process.cwd() + "/css", "index.scss", "index.css");
-			} else {
-				reset();
-			}
+	).on('all', (action, file) => {
+		if (file.endsWith(".scss")) {
+			compileScss(process.cwd() + "/css", "index.scss", "index.css");
+		} else {
+			reset();
 		}
-	);
-	fs.watch(
+	});
+	chokidar.watch(
 		process.cwd() + "/img",
 		{
 			recursive: true,
 		},
-		reset
-	);
+	).on('all', reset);
 	/* End of */
 };
