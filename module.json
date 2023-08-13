@@ -4,7 +4,7 @@
 	"runner": "runner.js",
 	"router": "index.js serve.js",
 	"git": {
-		"repo": "https://github.com/WebArtWork/template.git"
+		"repo": "https://github.com/WebArtWork/waw-template.git"
 	},
 	"dependencies": {
 		"sass": "*"
