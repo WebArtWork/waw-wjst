@@ -1,11 +1,9 @@
 {
+	"repo" : "git@github.com:WebArtWork/waw-template.git",
 	"name": "Template",
 	"priority": 905,
 	"runner": "runner.js",
 	"router": "index.js serve.js",
-	"git": {
-		"repo": "https://github.com/WebArtWork/waw-template.git"
-	},
 	"dependencies": {
 		"sass": "*"
 	}
