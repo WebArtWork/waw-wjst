@@ -169,5 +169,37 @@ module.exports = function (waw) {
 			recursive: true,
 		},
 	).on('all', reset);
+         /*
+	 *	Proxy Management
+	 */
+	const http = waw.http('http://localhost', '8080');
+	waw.use((req, res, next) => {
+		if (req.originalUrl.startsWith('/api/')) {
+			if (req.method === 'GET') {
+				http.get(req.originalUrl, data => {
+					if (typeof data === 'object') {
+						res.setHeader('Content-Type', 'application/json');
+						res.json(data);
+					} else {
+						res.setHeader('Content-Type', 'application/javascript');
+						res.send(data);
+					}
+				});
+			} else {
+				http[req.method.toLowerCase()](req.originalUrl, req.body, data => {
+					if (typeof data === 'object') {
+						res.setHeader('Content-Type', 'application/json');
+						res.json(data);
+					} else {
+						res.setHeader('Content-Type', 'application/javascript');
+						res.send(data);
+					}
+				});
+			}
+		} else {
+			next();
+		}
+	});
 	/* End of */
+	
 };
