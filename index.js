@@ -11,7 +11,7 @@ module.exports = function(waw){
 	}
 	waw.build = function(root, page){
 		fs.mkdirSync(root+sep+'dist', { recursive: true });
-		if (!fs.existsSync(root+sep+'index.html')) {
+		if (!fs.existsSync(path.join(root, 'index.html'))) {
 			return console.log('Missing index.html in template root folder');
 		}
 		if (!fs.existsSync(path.join(root, 'pages', page))) {
