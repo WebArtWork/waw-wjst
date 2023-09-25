@@ -14,6 +14,9 @@ module.exports = function(waw){
 		if (!fs.existsSync(root+sep+'index.html')) {
 			return console.log('Missing index.html in template root folder');
 		}
+		if (!fs.existsSync(path.join(root, 'pages', page))) {
+			return console.log('In template missing page ' + page);
+		}
 		let code = fs.readFileSync(root+sep+'index.html', 'utf8');
 		if (fs.existsSync(path.join(root, 'pages', page, 'index.scss')) ||
 			fs.existsSync(path.join(root, 'pages', page, page+'.scss'))) {
