@@ -19,10 +19,6 @@ const new_page = function(waw){
 	for (var i = 0; i < pages.length; i++) {
 		pages[i] = pages[i].split(path.sep).pop();
 	}
-	let code = fs.readFileSync(__dirname+'/page/index.css', 'utf8');
-	code = code.split('CNAME').join(Name);
-	code = code.split('NAME').join(name);
-	fs.writeFileSync(path.join(location, name+'.scss'), code, 'utf8');
 	code = fs.readFileSync(__dirname+'/page/index.html', 'utf8');
 	code = code.split('CNAME').join(Name);
 	code = code.split('NAME').join(name);
@@ -30,10 +26,6 @@ const new_page = function(waw){
 		code = '<a href="/'+pages[i]+'">'+pages[i]+'</a>\n' + code;
 	}
 	fs.writeFileSync(path.join(location, name+'.html'), code, 'utf8');
-	code = fs.readFileSync(__dirname+'/page/index.js', 'utf8');
-	code = code.split('CNAME').join(Name);
-	code = code.split('NAME').join(name);
-	fs.writeFileSync(path.join(location, name+'.js'), code, 'utf8');
 	code = fs.readFileSync(__dirname+'/page/page.json', 'utf8');
 	code = code.split('CNAME').join(Name);
 	code = code.split('NAME').join(name);
