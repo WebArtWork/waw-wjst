@@ -9,12 +9,12 @@ const new_page = function(waw){
 	let name = waw.argv[0].toLowerCase();
 	let Name = name.slice(0, 1).toUpperCase() + name.slice(1);
 	let location = path.join(process.cwd(), 'pages', name);
+	
 	if (fs.existsSync(location)) {
 		console.log('Page already exists');
 		process.exit(0);
 	}
 	fs.mkdirSync(location, { recursive: true });
-	fs.mkdirSync(path.join(process.cwd(),'dist'), { recursive: true });
 	
 	let code = fs.readFileSync(__dirname + '/page/index.html', 'utf8');
 	code = code.split('CNAME').join(Name);
