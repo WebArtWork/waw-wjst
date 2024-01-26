@@ -15,12 +15,12 @@ module.exports = function(waw){
 		template = JSON.parse(fs.readFileSync(process.cwd() + sep + 'template.json'));
 	}
 	waw.build = function(root, page){
-		fs.mkdirSync(root+sep+'dist', { recursive: true });
+		fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 		if (!fs.existsSync(path.join(root, 'index.html'))) {
-			return console.log('Missing index.html in template root folder');
+			return console.log('Missing index.html in template '+ root +' root folder');
 		}
 		if (!fs.existsSync(path.join(root, 'pages', page))) {
-			return console.log('In template missing page ' + page);
+			return console.log('In template ' + root + ' missing page ' + page);
 		}
 		let code = fs.readFileSync(root+sep+'index.html', 'utf8');
 		if (fs.existsSync(path.join(root, 'pages', page, 'index.scss')) ||
