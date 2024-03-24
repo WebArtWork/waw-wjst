@@ -60,6 +60,13 @@ module.exports = function (waw) {
 			page.config.translate = (slug) => {
 				return slug.split('.').slice(1).join('.');
 			}
+			if (Array.isArray(template.functions)) {
+				for (const func of template.functions) {
+					page.config[func] = (param) => {
+						return param;
+					}
+				}
+			}
 			let html = waw._derer.renderFile(page.dist, page.config);
 			let refresh = `<script>var id, reset = ()=>{ fetch('/reset').then(response => response.json()).then(resp => { if(!id) id = resp; else if(id != resp){ return location.reload(); }; setTimeout(reset, 1000); });};reset();</script>`;
 			html = html.replace("</body>", refresh + "</body>");
@@ -201,5 +208,5 @@ module.exports = function (waw) {
 		}
 	});
 	/* End of */
-	
+
 };
