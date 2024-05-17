@@ -179,9 +179,10 @@ module.exports = function (waw) {
          /*
 	 *	Proxy Management
 	 */
-	const http = waw.http('http://localhost', '8080');
+	const http = waw.config.api ? waw.http(waw.config.api, waw.config.apiPort || 443) : null;
 	waw.use((req, res, next) => {
-		if (req.originalUrl.startsWith('/api/')) {
+		if (req.originalUrl.startsWith('/api/') && waw.config.api) {
+			http.headers = req.headers;
 			if (req.method === 'GET') {
 				http.get(req.originalUrl, data => {
 					if (typeof data === 'object') {
