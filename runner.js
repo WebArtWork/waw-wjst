@@ -65,6 +65,7 @@ const build = async function (waw) {
 			...waw.readJson(
 				path.join(process.cwd(), "pages", page, "page.json")
 			),
+			...(waw.config.build || {})
 		};
 		fs.writeFileSync(
 			path.join(process.cwd(), page + '.html'),
