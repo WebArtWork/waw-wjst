@@ -6,15 +6,13 @@ const chokidar = require("chokidar");
 module.exports = async function (waw) {
   await waw.wait(1000);
 
-  let template = {};
-  if (fs.existsSync(path.join(process.cwd(), "template.json"))) {
-    template = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), "template.json"))
-    );
+  let wjst = {};
+  if (fs.existsSync(path.join(process.cwd(), "wjst.json"))) {
+    wjst = JSON.parse(fs.readFileSync(path.join(process.cwd(), "wjst.json")));
   } else return;
   waw.now = Date.now();
   waw.serve(process.cwd(), {
-    prefix: template.prefix,
+    prefix: wjst.prefix,
   });
   fs.mkdirSync(path.join(process.cwd(), "pages"), {
     recursive: true,
@@ -137,7 +135,7 @@ module.exports = async function (waw) {
     })
     .on("all", reset);
   chokidar
-    .watch(process.cwd() + "/template.json", {
+    .watch(process.cwd() + "/wjst.json", {
       recursive: true,
     })
     .on("all", reset);

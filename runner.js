@@ -2,14 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const scripts = require("./index.api");
 
-const getTemplateJson = (waw) => {
-  let templateJson = waw.readJson(path.join(process.cwd(), "template.json"));
+const getWjstJson = (waw) => {
+  let wjstJson = waw.readJson(path.join(process.cwd(), "wjst.json"));
 
   if (waw.config.fetch) {
     for (const docs in waw.config.fetch) {
       try {
-        templateJson = {
-          ...templateJson,
+        wjstJson = {
+          ...wjstJson,
           ...waw.readJson(path.join(process.cwd(), docs + ".json")),
         };
       } catch (error) {
@@ -18,7 +18,7 @@ const getTemplateJson = (waw) => {
     }
   }
 
-  return templateJson;
+  return wjstJson;
 };
 
 const new_page = function (waw) {
@@ -80,7 +80,7 @@ async function generate_documents(waw, exit = true) {
         }
       }
 
-      const json = getTemplateJson(waw);
+      const json = getWjstJson(waw);
 
       const page = waw.config.generate[_url];
 
@@ -176,10 +176,8 @@ module.exports.fetch = fetch_documents;
 module.exports.f = fetch_documents;
 
 const build = async function (waw) {
-  if (!fs.existsSync(process.cwd(), "template.json")) {
-    console.log(
-      "Looks like this is not waw template project, I cannot build it"
-    );
+  if (!fs.existsSync(process.cwd(), "wjst.json")) {
+    console.log("Looks like this is not waw wjst project, I cannot build it");
     process.exit(1);
   }
 
@@ -199,14 +197,14 @@ const build = async function (waw) {
 
   await fetch_documents(waw, false);
 
-  const templateJson = getTemplateJson(waw);
+  const wjstJson = getWjstJson(waw);
 
   const folders = waw.getDirectories(path.join(process.cwd(), "pages"));
   for (const folder of folders) {
     const page = path.basename(folder);
     waw.build(process.cwd(), page);
     const json = {
-      ...templateJson,
+      ...wjstJson,
       ...waw.readJson(path.join(process.cwd(), "pages", page, "page.json")),
       page: `/pages/${page}/${page}.html`,
       ...(waw.config.build || {}),
@@ -252,7 +250,7 @@ const build = async function (waw) {
 
         for (const doc of localJson[page.json]) {
           const json = {
-            ...templateJson,
+            ...wjstJson,
             ...waw.readJson(
               path.join(process.cwd(), "pages", page.name, "page.json")
             ),
@@ -269,7 +267,7 @@ const build = async function (waw) {
         }
       } else if (page.url) {
         const json = {
-          ...templateJson,
+          ...wjstJson,
           ...waw.readJson(
             path.join(process.cwd(), "pages", page.name, "page.json")
           ),
