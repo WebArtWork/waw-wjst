@@ -91,7 +91,7 @@ module.exports = async function (waw) {
     );
     if (fs.existsSync(pagesPageJsonRoot)) {
       pages[i] = {
-        config: JSON.parse(JSON.stringify(template)),
+        config: JSON.parse(JSON.stringify(wjst)),
         dist: process.cwd() + "/dist/" + name + ".html",
         root: root,
         name: name,
