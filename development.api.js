@@ -47,8 +47,8 @@ module.exports = async function (waw) {
       page.config.translate = (slug) => {
         return slug.split(".").slice(1).join(".");
       };
-      if (Array.isArray(template.functions)) {
-        for (const func of template.functions) {
+      if (Array.isArray(wjst.functions)) {
+        for (const func of wjst.functions) {
           page.config[func] = (param) => {
             return param;
           };
