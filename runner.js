@@ -155,16 +155,16 @@ const fetch_documents = async function (waw, exit = true) {
     }
   }
 
-  for (const info in waw.config.fetch) {
-    const json = {};
+  const wjstJson = getWjstJson(waw);
 
-    json[info] = await fetchInfo(waw.config.fetch[info]);
-
-    fs.writeFileSync(
-      path.join(process.cwd(), info + ".json"),
-      JSON.stringify(json, null, 4)
-    );
+  for (const config of waw.config.fetch) {
+    wjstJson[config.wjst] = await fetchInfo(config.api);
   }
+
+  fs.writeFileSync(
+    path.join(process.cwd(), "wjst.json"),
+    JSON.stringify(wjstJson, null, 4)
+  );
 
   if (exit) {
     console.log("Information has been fetched");
