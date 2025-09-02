@@ -125,6 +125,7 @@ async function generate_documents(waw, exit = true) {
 						"/" +
 						generate.page +
 						".html",
+					...(waw.config.build || {}),
 				}),
 				"utf8"
 			);
