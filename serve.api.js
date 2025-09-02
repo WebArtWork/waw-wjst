@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 module.exports = function (waw) {
 	if (
 		!waw.config.wjst ||
@@ -13,31 +13,24 @@ module.exports = function (waw) {
 
 		const page = {};
 
-		for (const url of template.pages.split(' ')) {
-			page['/' + (url === 'index' ? "" : url)] = (req, res) => {
+		for (const url of template.pages.split(" ")) {
+			page["/" + (url === "index" ? "" : url)] = (req, res) => {
 				res.send(
-					waw.render(
-						path.join(
-							templatePath,
-							"dist",
-							"index.html"
-						),
-						{
-							...waw.config,
-							base: template.prefix + '/'
-						}
-					)
+					waw.render(path.join(templatePath, "dist", "index.html"), {
+						...waw.config,
+						base: template.prefix + "/",
+					})
 				);
-			}
+			};
 		}
 
 		waw.api({
 			template: {
 				path: templatePath,
 				prefix: template.prefix,
-				pages: template.pages
+				pages: template.pages,
 			},
-			page
+			page,
 		});
 	}
-}
+};
