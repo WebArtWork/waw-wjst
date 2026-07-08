@@ -1,9 +1,9 @@
 {
-	"repo": "https://github.com/WebArtWork/waw-wjst.git",
-	"name": "Wjst",
-	"priority": 905,
-	"runner": "runner.js",
-	"dependencies": {
-		"sass": "*"
-	}
+    "repo": "https://github.com/WebArtWork/waw-wjst.git",
+    "name": "Wjst",
+    "priority": 905,
+    "dependencies": {
+        "sass": "*",
+        "wjst": "*"
+    }
 }
